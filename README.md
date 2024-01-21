@@ -66,4 +66,11 @@ or
 ```
 curl -s https://pokeapi.co/api/v2/pokemon/  | python3 jq_explorer/main.py
 ```
-![Screenshot using previous command](images/curl-example.png)
+![Screenshot using previous json example](images/curl-example.png)
+
+
+```
+head example.csv | python3 jq_explorer/main.py
+```
+![Screenshot using previous csv](images/csv-example.png)
+
