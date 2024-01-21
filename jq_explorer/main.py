@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import os
 import readline
 import subprocess
@@ -16,13 +17,14 @@ QUIT_COMMAND = "q"
 cache = {}
 
 
-def process_response(response, jq_string):
+def process_response(response, jq_string, args):
     processed_output = None
     with tempfile.NamedTemporaryFile("w", delete=False) as f:
         f.write(response)
     try:
+        args = ' '.join(args)
         processed_output = subprocess.check_output(
-            f"jq -r '{jq_string}' {f.name}", shell=True
+            f"jq {args} '{jq_string}' {f.name}", shell=True
         )
     except subprocess.CalledProcessError as error:
         print(f"Command '{error.cmd}' returned non-zero exit status {error.returncode}.")
@@ -57,13 +59,13 @@ def get_jq_command():
     return jq_string
 
 
-def handle_response(response):
+def handle_response(response, args):
     while True:
         jq_string = get_jq_command()
         if jq_string == QUIT_COMMAND:
             break
 
-        processed_output = process_response(response, jq_string)
+        processed_output = process_response(response, jq_string, args)
         if processed_output is None:
             print(EMPTY_MESSAGE)
             continue
@@ -84,18 +86,16 @@ def make_available_the_user_input():
 
 def main():
     response = sys.stdin.read().strip()  # read the data from the pipe
-    try:
-        json.loads(response)
-    except json.decoder.JSONDecodeError as decode_error:
-        print(f"{INVALID_INPUT_MESSAGE}: {decode_error}")
-        return
 
     if not response:
         print(NO_INPUT_MESSAGE)
         return
 
+    parser = argparse.ArgumentParser()
+    args, unknown = parser.parse_known_args()
+
     make_available_the_user_input()
-    handle_response(response)
+    handle_response(response, unknown if unknown else ['-r'])
 
 
 if __name__ == "__main__":
