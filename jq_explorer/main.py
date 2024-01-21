@@ -53,7 +53,7 @@ def get_jq_command():
     if cache.get("last_jq") is not None:
         print("Latest jq: ", cache.get("last_jq", "None"))
     jq_string = handle_input(
-        "Enter jq string to handle the output: ", cache.get("last_jq")
+        "Enter jq: ", cache.get("last_jq")
     )
     cache["last_jq"] = jq_string
     return jq_string

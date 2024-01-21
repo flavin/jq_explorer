@@ -70,7 +70,8 @@ curl -s https://pokeapi.co/api/v2/pokemon/  | python3 jq_explorer/main.py
 
 
 ```
-head example.csv | python3 jq_explorer/main.py
+head worldcities.csv | python3 jq_explorer/main.py -R -s
+Enter jq string: split("\r\n")| [map(sub("\\\"";"";"g")|split(",")) | .[0] as $headers |.[1:][]| with_entries(.key=$headers[.key])]
 ```
 ![Screenshot using previous csv](images/csv-example.png)
 
