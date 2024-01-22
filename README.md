@@ -10,13 +10,13 @@ To install and run this script, follow these steps:
 1. Clone the repository from GitHub:
 
 ```
-git clone https://github.com/flavin/jq_explorer.git
+git clone https://github.com/flavin/jqexplorer.git
 ```
 
 2. Navigate to the project directory:
 
 ```
-cd jq_explorer
+cd jqexplorer
 ```
 
 3. Install the required Python packages:
@@ -32,7 +32,7 @@ Please ensure that you have Python and pip installed on your system before follo
 To run the script, use the following command:
 
 ```
-echo '{"name": "John", "age": 30, "city": "New York"}' | python jq_explorer/main.py
+echo '{"name": "John", "age": 30, "city": "New York"}' | python jqexplorer/main.py
 ```
 
 if you have a file `example.json``
@@ -58,19 +58,19 @@ if you have a file `example.json``
 then you can
 
 ```
-cat example.json | python jq_explorer/main.py
+cat example.json | python jqexplorer/main.py
 ```
 
 or
 
 ```
-curl -s https://pokeapi.co/api/v2/pokemon/  | python3 jq_explorer/main.py
+curl -s https://pokeapi.co/api/v2/pokemon/  | python3 jqexplorer/main.py
 ```
 ![Screenshot using previous json example](images/curl-example.png)
 
 
 ```
-head worldcities.csv | python3 jq_explorer/main.py -R -s
+head worldcities.csv | python3 jqexplorer/main.py -R -s
 Enter jq string: split("\r\n")| [map(sub("\\\"";"";"g")|split(",")) | .[0] as $headers |.[1:][]| with_entries(.key=$headers[.key])]
 ```
 ![Screenshot using previous csv](images/csvexample.png)
